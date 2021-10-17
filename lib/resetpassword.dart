@@ -1,31 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:login_app/loggedin.dart';
-import 'package:login_app/mailforotp.dart';
-import 'package:login_app/registernow.dart';
+import 'package:login_app/main.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: Login(),
-    ),
-  );
-}
-
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Reset extends StatefulWidget {
+  const Reset({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _ResetState createState() => _ResetState();
 }
 
-class _LoginState extends State<Login> {
-  bool p = true;
+class _ResetState extends State<Reset> {
   var openeye = Icons.remove_red_eye;
   var closeeye = Icons.visibility_off;
   var using = Icons.remove_red_eye;
-  createAlertDialogue(BuildContext context) {
+  var using1 = Icons.remove_red_eye;
+  AboutDialog(BuildContext context) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -40,7 +28,7 @@ class _LoginState extends State<Login> {
                     height: 10.0,
                   ),
                   Text(
-                    'Enter a valid e-mail id',
+                    'The password entered for registration and the confirmation password are different',
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -107,11 +95,56 @@ class _LoginState extends State<Login> {
         });
   }
 
-  var enteredmail;
-  var enteredpass;
-  var newtext;
-  var newpass;
+  SimpleDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+              elevation: 8.0,
+              backgroundColor: Colors.white,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(
+                    'Your password is successfully reset',
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                        (Route<dynamic> route) => false,
+                      );
+                    },
+                    color: Colors.blue,
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                ],
+              ));
+        });
+  }
 
+  var enteredpassreset = '';
+  bool p = true;
+  var newpass1;
+  var enteredpassconreset = '';
+  var newpass2;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,39 +158,25 @@ class _LoginState extends State<Login> {
             children: [
               Center(
                 child: Text(
-                  'LOGIN',
+                  'Reset Password',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
-                    fontSize: 50.0,
+                    fontSize: 30.0,
                   ),
                 ),
               ),
               SizedBox(
-                height: 20.0,
+                height: 40.0,
               ),
               TextFormField(
-                onChanged: (newtext) {
-                  enteredmail = newtext;
+                onChanged: (newpass1) {
+                  enteredpassreset = newpass1;
                 },
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'Enter your e-mail address',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.mail),
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextFormField(
-                onChanged: (newpass) {
-                  enteredpass = newpass;
-                },
-                obscureText: p,
                 keyboardType: TextInputType.visiblePassword,
+                obscureText: p,
                 decoration: InputDecoration(
-                  hintText: 'Enter your Password',
+                  hintText: 'Enter your new Password',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.lock_outline_rounded),
                   suffixIcon: IconButton(
@@ -178,20 +197,39 @@ class _LoginState extends State<Login> {
                       icon: Icon(using)),
                 ),
               ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Mail()));
-                  },
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      color: Colors.blue,
-                    ),
-                  )),
               SizedBox(
-                height: 10.0,
+                height: 20.0,
+              ),
+              TextFormField(
+                onChanged: (newpass2) {
+                  enteredpassconreset = newpass2;
+                },
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: p,
+                decoration: InputDecoration(
+                  hintText: 'Confirm Password',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.lock_outline_rounded),
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          if (p == false) {
+                            p = true;
+                          } else {
+                            p = false;
+                          }
+                          if (using1 == openeye) {
+                            using1 = closeeye;
+                          } else {
+                            using1 = openeye;
+                          }
+                        });
+                      },
+                      icon: Icon(using1)),
+                ),
+              ),
+              SizedBox(
+                height: 30.0,
               ),
               Container(
                 width: double.infinity,
@@ -201,62 +239,20 @@ class _LoginState extends State<Login> {
                       backgroundColor: MaterialStateProperty.all(Colors.blue),
                       shape: MaterialStateProperty.all(StadiumBorder())),
                   onPressed: () {
-                    bool emailValid = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(enteredmail);
-                    if (enteredmail == '' || enteredpass == '') {
+                    if (enteredpassreset == '' || enteredpassconreset == '') {
                       AlertDialog(context);
                     } else {
-                      if (emailValid == true) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => Logged()),
-                          (Route<dynamic> route) => false,
-                        );
+                      if (enteredpassconreset == enteredpassreset) {
+                        SimpleDialog(context);
                       } else {
-                        createAlertDialogue(context);
+                        AboutDialog(context);
                       }
                     }
                   },
                   child: Text(
-                    'Login',
+                    'Register',
                     style: TextStyle(color: Colors.white, fontSize: 25.0),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 30.0,
-              ),
-              Divider(
-                color: Colors.grey,
-                thickness: 1.5,
-              ),
-              Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Don\'t have an account?',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterNow()));
-                        },
-                        child: Text(
-                          'Register now',
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            color: Colors.blue,
-                          ),
-                        )),
-                  ],
                 ),
               ),
             ],
