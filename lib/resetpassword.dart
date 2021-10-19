@@ -142,6 +142,7 @@ class _ResetState extends State<Reset> {
 
   var enteredpassreset = '';
   bool p = true;
+  bool p1 = true;
   var newpass1;
   var enteredpassconreset = '';
   var newpass2;
@@ -205,7 +206,7 @@ class _ResetState extends State<Reset> {
                   enteredpassconreset = newpass2;
                 },
                 keyboardType: TextInputType.visiblePassword,
-                obscureText: p,
+                obscureText: p1,
                 decoration: InputDecoration(
                   hintText: 'Confirm Password',
                   border: OutlineInputBorder(),
@@ -213,10 +214,10 @@ class _ResetState extends State<Reset> {
                   suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
-                          if (p == false) {
-                            p = true;
+                          if (p1 == false) {
+                            p1 = true;
                           } else {
-                            p = false;
+                            p1 = false;
                           }
                           if (using1 == openeye) {
                             using1 = closeeye;

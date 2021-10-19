@@ -107,8 +107,8 @@ class _LoginState extends State<Login> {
         });
   }
 
-  var enteredmail;
-  var enteredpass;
+  var enteredmail = '';
+  var enteredpass = '';
   var newtext;
   var newpass;
 

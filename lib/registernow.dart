@@ -10,6 +10,7 @@ class RegisterNow extends StatefulWidget {
 
 class _RegisterNowState extends State<RegisterNow> {
   bool p = true;
+  bool p1 = true;
   var openeye = Icons.remove_red_eye;
   var closeeye = Icons.visibility_off;
   var using = Icons.remove_red_eye;
@@ -261,7 +262,7 @@ class _RegisterNowState extends State<RegisterNow> {
                     enteredpass2 = newpass2;
                   },
                   keyboardType: TextInputType.visiblePassword,
-                  obscureText: p,
+                  obscureText: p1,
                   decoration: InputDecoration(
                     hintText: 'Confirm Password',
                     border: OutlineInputBorder(),
@@ -274,10 +275,10 @@ class _RegisterNowState extends State<RegisterNow> {
                             using1 = openeye;
                           }
                           setState(() {
-                            if (p == false) {
-                              p = true;
+                            if (p1 == false) {
+                              p1 = true;
                             } else {
-                              p = false;
+                              p1 = false;
                             }
                           });
                         },
