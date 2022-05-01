@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "831496994633",
+    "project_id": "chapapp-be35d",
+    "storage_bucket": "chapapp-be35d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831496994633:android:14afaa956e874cf165a498",
+        "android_client_info": {
+          "package_name": "com.example.login_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831496994633-jthucup2jkm9foudttrci1qkaul21kvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNqpd-QNYVBYgYYhY4Wtv3n9hOQNwqqJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831496994633-jthucup2jkm9foudttrci1qkaul21kvo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

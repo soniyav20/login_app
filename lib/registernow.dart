@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:login_app/auth/auth.dart';
+import 'package:login_app/auth/database.dart';
+import 'package:login_app/loggedin.dart';
 import 'package:login_app/main.dart';
 
 class RegisterNow extends StatefulWidget {
@@ -9,6 +12,27 @@ class RegisterNow extends StatefulWidget {
 }
 
 class _RegisterNowState extends State<RegisterNow> {
+  bool isLoading = false;
+  AuthService authService = new AuthService();
+  DatabaseMethods databaseMethods = new DatabaseMethods();
+  TextEditingController passcont = new TextEditingController();
+  TextEditingController mailcont = new TextEditingController();
+  TextEditingController namecont = new TextEditingController();
+
+  singUp() async {
+    Map userMap = {
+      'name': namecont.text,
+      'email': mailcont.text,
+    };
+    await authService
+        .signUpWithEmailAndPassword(mailcont.text, passcont.text)
+        .then((val) {
+      databaseMethods.Upload(userMap);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Logged()));
+    });
+  }
+
   bool p = true;
   bool p1 = true;
   var openeye = Icons.remove_red_eye;
@@ -30,7 +54,7 @@ class _RegisterNowState extends State<RegisterNow> {
                     height: 10.0,
                   ),
                   Text(
-                    'Enter a valid e-mail id',
+                    'Error:\nUsername must be more than 4 and less than 10 characters.\nEnter a valid e-mail id and username.',
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -71,7 +95,7 @@ class _RegisterNowState extends State<RegisterNow> {
                     height: 10.0,
                   ),
                   Text(
-                    'The password entered for registration and the confirmation password are different',
+                    'Error:\nPassword must be 8 characters long.\nThe password entered for registration and the confirmation password should be same.',
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -183,9 +207,11 @@ class _RegisterNowState extends State<RegisterNow> {
   }
 
   var enteredmail1 = '';
+  var enteredname = '';
   var enteredpass1 = '';
   var newtext1;
   var newpass1;
+  var newname;
   var enteredpass2 = '';
   var newpass2;
   @override
@@ -213,6 +239,22 @@ class _RegisterNowState extends State<RegisterNow> {
                   height: 40.0,
                 ),
                 TextFormField(
+                  controller: namecont,
+                  onChanged: (newname) {
+                    enteredname = newname;
+                  },
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your Username',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.account_circle),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                  controller: mailcont,
                   onChanged: (newtext1) {
                     enteredmail1 = newtext1;
                   },
@@ -227,6 +269,7 @@ class _RegisterNowState extends State<RegisterNow> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  controller: passcont,
                   onChanged: (newpass1) {
                     enteredpass1 = newpass1;
                   },
@@ -304,8 +347,11 @@ class _RegisterNowState extends State<RegisterNow> {
                           enteredpass2 == '') {
                         AlertDialog(context);
                       } else {
-                        if (emailValid == true) {
-                          if (enteredpass2 == enteredpass1) {
+                        if (emailValid == true &&
+                            4 < enteredname.length &&
+                            enteredname.length < 10) {
+                          if (enteredpass2 == enteredpass1 &&
+                              enteredpass1.length == 8) {
                             SimpleDialog(context);
                           } else {
                             AboutDialog(context);
