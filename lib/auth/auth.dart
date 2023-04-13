@@ -4,8 +4,8 @@ import 'package:login_app/modal/user.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  UserUser? _userFromFirebaseUser(User userr) {
-    return userr != null ? UserUser(userid: userr.uid) : null;
+  UserUser? _userFromFirebaseUser(User user) {
+    return user != null ? UserUser(userid: user.uid) : null;
   }
 
   Future signInWithEmailAndPassword(String email, String password) async {
